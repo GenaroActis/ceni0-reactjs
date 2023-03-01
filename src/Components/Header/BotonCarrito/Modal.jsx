@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import ContadorCarrito from './ContadorCarrito'
+import { Link } from 'react-router-dom'
 
 
-window.addEventListener('storage', () => {
-    console.log("evento");
-});
 
 function Example(props) {
     const [show, setShow] = useState(false);
+    const [totalPrecio, setTotalPrecio] = useState(0);
 
     const productosElegidos = window.localStorage.getItem("productosElegidos");
     const productosElegidosParse = JSON.parse(productosElegidos);
@@ -24,6 +23,19 @@ function Example(props) {
         window.location.reload()
     };
     
+    function totalPrecioFunc(){
+        const totalPrecioCalculado = productosElegidosParse.reduce((acumulador, product) => acumulador + product.precioSubTotal, 0);
+        console.log("$",totalPrecioCalculado)
+        setTotalPrecio(totalPrecioCalculado);
+        window.localStorage.setItem("Total", totalPrecioCalculado)
+    }
+
+    
+    useEffect(() => {
+        if (productosElegidosParse !== null) {totalPrecioFunc()}
+    }, [productosElegidosParse]);
+
+
     return (
     <>
         <Button id="buttonC" variant="primary" onClick={handleShow}>
@@ -67,10 +79,12 @@ function Example(props) {
                 <Button variant="danger" onClick={vaciarCarrito}>
                     vaciar carrito
                 </Button>
-                <Button variant="primary" onClick={handleClose}>
-                    Comprar
-                </Button>
-                
+                <Link className="nav-link" aria-current="page" to={'/FinalizarCompra'}>
+                    <Button variant="primary" onClick={handleClose}>
+                        Comprar
+                    </Button>
+                </Link>
+                <h1 className='card-text shadow-lg p-3 bg-white rounded'>Total ${totalPrecio}</h1>
                 </>
                 )}
             </Modal.Footer>
