@@ -35,7 +35,6 @@ const Landing = () => {
                     <Route exact path="/Producto/:id" element={<ProductoDetalles/>}/>
                     <Route exact path="/FinalizarCompra" element={<FinalizarCompra/>}/>
                 </Routes>
-                
                 <Footer/>
             </BrowserRouter>
             
