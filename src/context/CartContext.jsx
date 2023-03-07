@@ -89,13 +89,12 @@ const CartProvider = ({children}) =>{
         setProductosElegidos([...productosElegidos]);
     };
 
-    const eliminarItem = (product) => {
-        let itemParaActualizar = productosElegidos.find((product) => product.id === product.id);
+    const eliminarItem = (prodId) => {
+        let itemParaActualizar = productosElegidos.find((product) => product.id === prodId);
         console.log(itemParaActualizar)
         // si la cantidad es menos a dos limpiamos el producto
         if (itemParaActualizar.elegidos < 2 ){
-            let prodId = itemParaActualizar
-            productosElegidos = productosElegidos.filter((product) => product.id !== product.id);
+            productosElegidos = productosElegidos.filter((product) => product.id !== prodId);
             itemParaActualizar.elegidos = 0;
         }
         // sino descontamos uno a cantidad elegida
@@ -119,7 +118,7 @@ const CartProvider = ({children}) =>{
     };
 
     return(
-        <CartContext.Provider value={{ productosElegidos,initialProductosElegidos, guardarLocalStorage, limpiarCarrito, itemEnCarrito,  eliminarItem, totalPrecio, agregarProducto, localStorage}}>
+        <CartContext.Provider value={{ productosElegidos, initialProductosElegidos, guardarLocalStorage, limpiarCarrito, itemEnCarrito,  eliminarItem, totalPrecio, agregarProducto, localStorage}}>
         {children}
         </CartContext.Provider>
     )
