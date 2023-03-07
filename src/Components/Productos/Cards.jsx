@@ -10,7 +10,7 @@ const Cards = () => {
 
     useEffect(() => {
         
-        fetch('https://res.cloudinary.com/dsdicaf5h/raw/upload/v1677544978/cenicero/productos_ugha4n.json')
+        fetch('https://res.cloudinary.com/dsdicaf5h/raw/upload/v1678109841/cenicero/productos_n94wu5.json')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');

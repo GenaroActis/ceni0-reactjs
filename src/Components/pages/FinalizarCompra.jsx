@@ -1,13 +1,42 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
+import { Link } from 'react-router-dom'
+import {CartContext} from '../../context/CartContext';
 
 const FinalizarCompra = () => {
-    const productosElegidos = window.localStorage.getItem("productosElegidos");
-    const productosElegidosParse = JSON.parse(productosElegidos);
+    const {productosElegidos, totalPrecio} = useContext(CartContext)
 
-    const totalPrecio = window.localStorage.getItem("Total");
+    const [nombre, setNombre] = useState('');
+    const [email, setEmail] = useState('');
 
+    const submit = (event) => {
+        event.preventDefault();
+        if(!email === '' || nombre === ''){
+            console.log("rellenar campos")
+        } else{
+    // Guardar la información del usuario en variables
+    const userData = { nombre, email };
+    console.log(userData);
+        }
+    }
+//     const form = document.querySelector("#button")
+// console.log(form)
+//     form.addEventListener('click', ()=>{
+//         console.log("submit")
+//     })
     return (
-        <div>
+        <form id="form" onSubmit={submit}>
+            <div className="form-group mt-5">
+                <label htmlFor="cliente" className="col-12 col-md-2 col-form-label h2">Cliente :</label>
+                    <div className="col-12 col-md-10">
+                        <input type="text" className="form-control" id="persona" placeholder="Nombre y Apellido"  onChange={(event) => setNombre(event.target.value)} />
+                    </div>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="email" className="col-12 col-md-2 col-form-label h2">Correo :</label>
+                    <div className="col-12 col-md-10">
+                        <input type="text" className="form-control" id="email" placeholder="Correo Electronico" onChange={(event) => setEmail(event.target.value)}/>
+                    </div>
+                </div>
             <div  className="form-group table-responsive">
                 <table  className="mt-5 mb-5 table">
                     <thead>
@@ -18,7 +47,7 @@ const FinalizarCompra = () => {
                             <th scope="col">Sub Total</th>
                         </tr>
                     </thead>
-                    {productosElegidosParse.map(product =>                  
+                    {productosElegidos.map(product =>                  
                     <tbody key={product.id}>
                         <tr>
                             <td>{product.nombre}</td>
@@ -36,8 +65,20 @@ const FinalizarCompra = () => {
                         </tr>
                     </tbody>
                 </table>
+                <div className="d-flex justify-content-center">
+                    <div className="p-2">
+                        <Link className="btn btn-warning btn-block" aria-current="page" to={'/Productos'}>Seguir Comprando</Link>
+                    </div>
+                    <div className="p-2">
+                        <button className="btn btn-success btn-block" id="button" onClick={
+                            console.log("submit")
+                        }>
+                            Finalizar Compra
+                        </button>
+                    </div>
+                </div>
             </div>
-        </div>
+        </form>
     )
 }
 

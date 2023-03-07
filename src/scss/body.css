@@ -29,11 +29,12 @@
   padding-right: 4rem;
   margin-bottom: 10%;
   margin-top: 10%;
+  justify-items: center;
 }
-#productos div {
+#productos a div {
   align-items: center;
 }
-#productos div #img2 {
+#productos a div #img2 {
   width: 100px;
   position: relative;
   top: -50px;
@@ -42,4 +43,10 @@
 
 #img2:hover {
   transform: scale(2);
+}
+
+@media screen and (max-width: 767px) {
+  #productos a {
+    width: 90vw;
+  }
 }/*# sourceMappingURL=body.css.map */

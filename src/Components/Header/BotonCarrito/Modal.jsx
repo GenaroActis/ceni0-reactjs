@@ -1,46 +1,27 @@
-import React, { useState, useEffect  } from 'react';
+import React, { useState, useEffect, useContext  } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import ContadorCarrito from './ContadorCarrito'
 import { Link } from 'react-router-dom'
+import { CartContext } from '../../../context/CartContext';
 
 
-
-function Example(props) {
+function Example(children) {
     const [show, setShow] = useState(false);
-    const [totalPrecio, setTotalPrecio] = useState(0);
+    const {productosElegidos, limpiarCarrito, totalPrecio, agregarProducto, eliminarItem, itemEnCarrito} = useContext(CartContext)
 
-    const productosElegidos = window.localStorage.getItem("productosElegidos");
-    const productosElegidosParse = JSON.parse(productosElegidos);
+    
+    console.log(totalPrecio)
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    
-    function vaciarCarrito(){
-        window.dispatchEvent(new Event('storage'))
-        localStorage.clear();
-        console.log("event")
-        window.location.reload()
-    };
-    
-    function totalPrecioFunc(){
-        const totalPrecioCalculado = productosElegidosParse.reduce((acumulador, product) => acumulador + product.precioSubTotal, 0);
-        console.log("$",totalPrecioCalculado)
-        setTotalPrecio(totalPrecioCalculado);
-        window.localStorage.setItem("Total", totalPrecioCalculado)
-    }
 
     
-    useEffect(() => {
-        if (productosElegidosParse !== null) {totalPrecioFunc()}
-    }, [productosElegidosParse]);
-
 
     return (
     <>
         <Button id="buttonC" variant="primary" onClick={handleShow}>
             <img src="https://res.cloudinary.com/dsdicaf5h/image/upload/v1677255374/cenicero/carrito-de-compras_1_nkqp6z.png" className="imgBoton"/>
-            <h2 id="numCarrito">{props.numCarrito}</h2>
         </Button>
 
         <Modal id="modal" className='text-center' show={show} onHide={handleClose} animation={false}>
@@ -48,16 +29,23 @@ function Example(props) {
                 <Modal.Title>Carrito</Modal.Title>
             </Modal.Header>
         <Modal.Body id='modalBody'>
-            {   productosElegidos === null ? (
+            {   productosElegidos.length === 0 ? (
                 <div className='display-3 shadow-lg text-danger p-3 mb-5 bg-white rounded'>¡Tu carrito esta vacio!</div>
             ) : (
-            productosElegidosParse.map(product=>
+            productosElegidos.map(product=>
                 <div key={product.id} className='card shadow-lg text-dark mt-5'>
                 <img src={product.img1} className='card-img-top mt-2 img-fluid' alt="" srcSet="" />
                 <div className='card-body'>
                     <h1 className='card-title'>{product.nombre}</h1>
                     <h2>Talle {product.talle}</h2>
-                    <h3>Cantidad {product.elegidos}</h3>
+                    <div className='d-flex flex-row justify-content-center align-items-center'>
+                        <button className='btn btn-outline-dark mr-3' onClick={()=>{agregarProducto(product)}}>+</button>
+                    <h3 className='mb-0'>Cantidad {product.elegidos}</h3>
+                        <button className='btn btn-outline-dark pr-3' onClick={()=>{
+                            let id = product.id
+                            eliminarItem(id)
+                            }}>-</button>
+                    </div>
                     {product.elegidos === 1?(
                     <h1 className='card-text shadow-lg p-3 bg-white rounded'>${product.precio} </h1>
                     ):(
@@ -72,11 +60,11 @@ function Example(props) {
                 <Button variant="danger" onClick={handleClose}>
                     Cerrar
                 </Button>
-                {productosElegidosParse === null? (
-                    console.log("carrito vacio")
+                {productosElegidos.length === 0? (
+                    console.log("vacio")
                 ):(
                 <>
-                <Button variant="danger" onClick={vaciarCarrito}>
+                <Button variant="danger" onClick={limpiarCarrito}>
                     vaciar carrito
                 </Button>
                 <Link className="nav-link" aria-current="page" to={'/FinalizarCompra'}>

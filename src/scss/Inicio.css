@@ -5,10 +5,19 @@
   padding-top: 100px;
   padding-bottom: 5%;
   border-bottom: #da8a0d solid 10px;
+  border-top: #da8a0d solid 10px;
   margin-bottom: 10%;
-  margin-top: 10%;
+  margin-top: 110px;
+  padding-left: 30vw;
+  padding-right: 30vw;
 }
 
+@media screen and (max-width: 1024px) {
+  #Video {
+    padding-left: 0vw;
+    padding-right: 0vw;
+  }
+}
 .divTodos {
   background-image: url(https://res.cloudinary.com/dsdicaf5h/image/upload/v1674159185/cenicero/fondo_apxg6x.png);
   padding-bottom: 5%;
@@ -35,6 +44,7 @@
   overflow: hidden;
   min-width: 100%;
   height: 100%;
+  width: 100%;
 }
 .divTodos .TodosProd span {
   display: inline-block;
@@ -48,6 +58,7 @@
   animation: animated 10s linear infinite;
 }
 .divTodos .TodosProd2 {
+  width: 100%;
   display: block;
   position: absolute;
   margin: auto auto;
@@ -74,6 +85,14 @@
   text-shadow: 0px 2px 1px rgb(255, 255, 255);
 }
 
+@media screen and (max-width: 694px) {
+  .divTodos .TodosProd span {
+    font-size: 50px;
+  }
+  .divTodos .TodosProd2 span {
+    font-size: 50px;
+  }
+}
 @keyframes animated {
   0% {
     transform: translate(0, 0);
@@ -93,7 +112,7 @@
   border-top: #da8a0d solid 10px;
   background-image: url(https://res.cloudinary.com/dsdicaf5h/image/upload/v1674159185/cenicero/fondo_apxg6x.png);
 }
-#nosotros .imgNosotros {
+#nosotros #imgNosotros {
   width: 400px;
   padding-top: 100px;
   padding-bottom: 100px;

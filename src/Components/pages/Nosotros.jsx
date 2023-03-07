@@ -11,7 +11,7 @@ const nosotros = () => {
             </h2>
             <h3>Si tienen alguna duda o consulta, <br /> pueden contactarnos en nuestro Instagram.</h3>
             <Link className="nav-link px-2 text-white" aria-current="page" to={`/Productos`}>
-                <img src="https://res.cloudinary.com/dsdicaf5h/image/upload/v1674159144/cenicero/footer_nozkhv.png" alt="" className='imgNosotros' />
+                <img src="https://res.cloudinary.com/dsdicaf5h/image/upload/v1674159144/cenicero/footer_nozkhv.png" alt="" className='img-fluid' id='imgNosotros' />
             </Link>
         </div>
         </>

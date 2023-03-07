@@ -1,41 +1,27 @@
-import React, { useState, useEffect, Fragment} from 'react'
+import React, { useState, useEffect, Fragment, useContext} from 'react'
 import { useParams } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel';
 import Card from 'react-bootstrap/Card';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {CartContext} from '../../context/CartContext';
 
 
 
-let productosElegidos = [];
-
-// si ya hay un producto en el localStorage lo recuperamos 
-if(window.localStorage.getItem("productosElegidos")){
-    productosElegidos = JSON.parse(window.localStorage.getItem("productosElegidos"));
-}
 
 
+const  Producto = (children) => {
+    const {agregarProducto, guardarLocalStorage, productosElegidos, itemEnCarrito} = useContext(CartContext);
 
-const  Producto = () => {
-    
     // toastify
-    const notify = () => toast.success('Agregado!', {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        });
+    
     const [cardsProducts, setCardsProducts] = useState([])
     const { id } = useParams();
     
     // fetch al link del json
     useEffect(() => {
         
-        fetch('https://res.cloudinary.com/dsdicaf5h/raw/upload/v1677544978/cenicero/productos_ugha4n.json')
+        fetch('https://res.cloudinary.com/dsdicaf5h/raw/upload/v1678109841/cenicero/productos_n94wu5.json')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -47,7 +33,6 @@ const  Producto = () => {
     }, []);
 
     const productoFiltrado = cardsProducts.filter(product => String(product.id) === id )
-
     return (
         <div key={id} id='detalleProducto'>
             {
@@ -58,7 +43,7 @@ const  Producto = () => {
                         <Carousel variant="dark">
                             <Carousel.Item>
                                 <img
-                                className="d-block w-100"
+                                className="d-block w-100 img-fluid"
                                 src={product.img1}
                                 alt="First slide"
                                 />
@@ -86,8 +71,6 @@ const  Producto = () => {
                                 </Card.Text>
                                 <div className="d-grid gap-2 col-6 mx-auto">
                                 <button id='botonAgregar' onClick={()=>{
-                                    // toastify
-                                    notify()
                                     // funcion agregado en boton
                                     const botonAgregar = document.querySelector("#botonAgregar")
                                     function agregado() {
@@ -101,48 +84,9 @@ const  Producto = () => {
                                         }, 3000);
                                     };
                                     agregado()
-                                    
-                                    // generamos la funcion de agregar producto
-                                    const agregarProducto = (id) =>{
-                                        const productoEnCarrito = productosElegidos.find((prod) =>{
-                                            return prod.id == product.id
-                                        });;
-                                        
-                                        // si ya existe actualizamos cantidadElegida
-                                        if (productoEnCarrito){
-                                                let productoParaActualizar = productosElegidos.find((prod) =>{
-                                                return prod.id == product.id
-                                            });
-                                                let precioParaActualizar = productoParaActualizar.precio;
-                                                productoParaActualizar.elegidos = productoParaActualizar.elegidos + 1;
-                                                productoParaActualizar.precioSubTotal = productoParaActualizar.elegidos * precioParaActualizar;
-                                                console.log(productosElegidos);
-                                                console.log(productoParaActualizar);
-                                        }
-                                        // si el elemento no existe ya en el array productosElegidos que....
-                                        else{
-                                            productosElegidos.push({
-                                                id : product.id,
-                                                nombre : product.nombre,
-                                                precio : product.precio,
-                                                talle : product.talle,
-                                                img1 : product.img1,
-                                                img2 : product.img2,
-                                                precioSubTotal : product.precioSubTotal,
-                                                elegidos : 1,
-                                                medidas : product.medidas
-                                                });
-                                                console.log("click")
-                                                console.log(productosElegidos);
-                                            };
-                                        };
-                                        agregarProducto(); 
-                                        
-                                        // convertimos los objetos en json
-                                        const JsonProductos = JSON.stringify(productosElegidos)
-                                        // almacenamos en localStorage
-                                        window.localStorage.setItem("productosElegidos", JsonProductos)
-                                        window.dispatchEvent(new Event('storage'))
+                                    // llamamos la funcion de agregar producto y guardar en el LocalStorage
+                                        agregarProducto(product);
+                                        console.log(productosElegidos)
                                 }} type="button" className='btn btn-lg btn-outline-primary'>agregar</button>
                                 </div>
                                 {/* // toastify */}

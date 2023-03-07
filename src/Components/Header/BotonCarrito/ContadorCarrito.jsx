@@ -1,34 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { CartContext } from '../../../context/CartContext';
 
 function ContadorCarrito(props) {
-    return <h1 id='numCarro'>{props.numero}</h1>;
-}
+    const { productosElegidos, initialProductosElegidos } = useContext(CartContext);
+    const [cargando, setCargando] = useState(true);
 
-function App() {
-    const [numeroProductos, setNumeroProductos] = useState(0);
+    let initialCantidad = initialProductosElegidos.reduce((acumulador, product) => acumulador + product.elegidos, 0)
+
+    const [totalCantidadNum, setTotalCantidadNum] = useState(initialCantidad);
 
     useEffect(() => {
-    // Escuchar los cambios en el almacenamiento local
-    window.addEventListener('storage', handleStorageChange);
+        if (cargando) {
+        setCargando(false);
+        return;
+        }
 
-    // Obtener el número de productos del almacenamiento local al cargar la página
-    const productosElegidos = window.localStorage.getItem("productosElegidos");
-    const productosElegidosParse = JSON.parse(productosElegidos);
-    setNumeroProductos(productosElegidosParse?.length || 0);
-    }, []);
-
-    function handleStorageChange() {
-    // Obtener el número de productos actualizado del almacenamiento local
-    const productosElegidos = window.localStorage.getItem("productosElegidos");
-    const productosElegidosParse = JSON.parse(productosElegidos);
-    setNumeroProductos(productosElegidosParse?.length || 0);
-    }
+    setTotalCantidadNum(productosElegidos.reduce((acumulador, product) => acumulador + product.elegidos, 0));
+    }, [productosElegidos]);
 
     return (
-    <div>
-        <ContadorCarrito numero={numeroProductos} />
-    </div>
+        <div>
+            <h1 id='numCarro'>{totalCantidadNum}</h1>
+        </div>
     );
 }
 
-export default App;
+export default ContadorCarrito;
+
+
+
+
+
+
