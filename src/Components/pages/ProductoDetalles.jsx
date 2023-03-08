@@ -40,17 +40,17 @@ const  Producto = (children) => {
                 // carousel boostrap
                 <React.Fragment key={product.id}>
                     <div id='carousel'>
-                        <Carousel variant="dark">
+                        <Carousel variant="dark rounded">
                             <Carousel.Item>
                                 <img
-                                className="d-block w-100 img-fluid"
+                                className="d-block w-100 img-fluid rounded"
                                 src={product.img1}
                                 alt="First slide"
                                 />
                             </Carousel.Item>
                             <Carousel.Item>
                                 <img
-                                className="d-block w-100"
+                                className="d-block w-100 rounded"
                                 src={product.img2}
                                 alt="Second slide"
                                 />

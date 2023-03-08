@@ -87,6 +87,7 @@ const CartProvider = ({children}) =>{
         productosElegidos = [];
         window.sessionStorage.clear();
         setProductosElegidos([...productosElegidos]);
+        guardarLocalStorage();
     };
 
     const eliminarItem = (prodId) => {
@@ -107,6 +108,12 @@ const CartProvider = ({children}) =>{
         guardarLocalStorage();
     };
 
+    const limpiarItem = (prodId) => {
+        productosElegidos = productosElegidos.filter((product) => product.id !== prodId);
+        setProductosElegidos([...productosElegidos]);
+        guardarLocalStorage();
+    }
+
     const totalPrecio = productosElegidos.reduce((acumulador, product) => acumulador + product.precioSubTotal, 0);
 
     const localStorage = () => {
@@ -118,7 +125,7 @@ const CartProvider = ({children}) =>{
     };
 
     return(
-        <CartContext.Provider value={{ productosElegidos, initialProductosElegidos, guardarLocalStorage, limpiarCarrito, itemEnCarrito,  eliminarItem, totalPrecio, agregarProducto, localStorage}}>
+        <CartContext.Provider value={{limpiarItem, productosElegidos, initialProductosElegidos, guardarLocalStorage, limpiarCarrito, itemEnCarrito,  eliminarItem, totalPrecio, agregarProducto, localStorage}}>
         {children}
         </CartContext.Provider>
     )

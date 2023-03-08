@@ -1,6 +1,9 @@
 import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {CartContext} from '../../context/CartContext';
+import Alert from 'react-bootstrap/Alert';
+    
+    const userData = [];
 
 const FinalizarCompra = () => {
     const {productosElegidos, totalPrecio} = useContext(CartContext)
@@ -8,21 +11,28 @@ const FinalizarCompra = () => {
     const [nombre, setNombre] = useState('');
     const [email, setEmail] = useState('');
 
+
     const submit = (event) => {
         event.preventDefault();
-        if(!email === '' || nombre === ''){
+        if(email === '' || nombre === ''){
             console.log("rellenar campos")
         } else{
-    // Guardar la información del usuario en variables
-    const userData = { nombre, email };
-    console.log(userData);
+            // generamos una exprecion regular y validamos el email
+            let expReg= /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
+            let valido = expReg.test(email)
+            console.log(valido)
+            if(valido === true){
+                // si el email es valido guardamos la información del usuario en variables
+                userData.push({ nombre, email });
+                console.log(userData);
+            }else {
+                console.log(userData)
+            }
         }
     }
-//     const form = document.querySelector("#button")
-// console.log(form)
-//     form.addEventListener('click', ()=>{
-//         console.log("submit")
-//     })
+
+
+
     return (
         <form id="form" onSubmit={submit}>
             <div className="form-group mt-5">

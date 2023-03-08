@@ -8,7 +8,7 @@ import { CartContext } from '../../../context/CartContext';
 
 function Example(children) {
     const [show, setShow] = useState(false);
-    const {productosElegidos, limpiarCarrito, totalPrecio, agregarProducto, eliminarItem, itemEnCarrito} = useContext(CartContext)
+    const {productosElegidos, limpiarItem, limpiarCarrito, totalPrecio, agregarProducto, eliminarItem, itemEnCarrito} = useContext(CartContext)
 
     
     console.log(totalPrecio)
@@ -46,6 +46,10 @@ function Example(children) {
                             eliminarItem(id)
                             }}>-</button>
                     </div>
+                    <button className='btn btn-danger mt-2 mb-2' onClick={()=>{
+                            let prodId = product.id
+                            limpiarItem(prodId)
+                            }}>Eliminar Producto</button>
                     {product.elegidos === 1?(
                     <h1 className='card-text shadow-lg p-3 bg-white rounded'>${product.precio} </h1>
                     ):(
