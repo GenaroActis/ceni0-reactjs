@@ -1,10 +1,12 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useState, useEffect } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export const CartContext = createContext();
 
 const CartProvider = ({children}) =>{
+
+
 
     const notify2 = () => toast.error('Limite Stock!', {
         position: "top-right",
@@ -27,17 +29,20 @@ const CartProvider = ({children}) =>{
         theme: "colored",
     });
 
-    const initialProductosElegidos = window.localStorage.getItem('productosElegidos')
-    ? JSON.parse(window.localStorage.getItem('productosElegidos'))
-    : {};
+    let initialProductosElegidos = [];
 
-    let [productosElegidos, setProductosElegidos] = useState(
-        initialProductosElegidos
-    )
+    initialProductosElegidos = window.localStorage.getItem('productosElegidos')
+    ? (JSON.parse(window.localStorage.getItem('productosElegidos'))) : (initialProductosElegidos = []);
+
+    let [productosElegidos, setProductosElegidos] = useState(initialProductosElegidos)
+
+    console.log(productosElegidos)
 
     const itemEnCarrito = (id) => {
-        return productosElegidos.find((product) => product.id === id);
+        return productosElegidos.find((product) => product.id === id) || null;
     };
+
+    console.log(productosElegidos)
 
     const agregarProducto = (product) => {
         const itemParaActualizar = itemEnCarrito(product.id);
@@ -71,16 +76,6 @@ const CartProvider = ({children}) =>{
                     notify1()
                     setProductosElegidos([...productosElegidos]);
             }
-        guardarLocalStorage();
-    };
-
-    const guardarLocalStorage = () => {
-        // convertimos los objetos en json
-        const JsonProductos = JSON.stringify(productosElegidos);
-        // almacenamos en localStorage
-        if (window.localStorage) {
-            window.localStorage.setItem("productosElegidos", JsonProductos);
-        }
     };
 
     const limpiarCarrito = () => {
@@ -114,18 +109,34 @@ const CartProvider = ({children}) =>{
         guardarLocalStorage();
     }
 
-    const totalPrecio = productosElegidos.reduce((acumulador, product) => acumulador + product.precioSubTotal, 0);
+    let [totalPrecio, setTotalPrecio] = useState(0);
 
-    const localStorage = () => {
+    const totalPrecioFunctions = () =>{
+        if (productosElegidos.length === 0){
+            console.log("array vacio")
+        } else {
+            totalPrecio = productosElegidos.reduce((acumulador, product) => acumulador + product.precioSubTotal, 0);
+            setTotalPrecio(totalPrecio);
+        }
+    }
+    const guardarLocalStorage = () => {
         // convertimos los objetos en json
-        const JsonProductos = JSON.stringify(productosElegidos)
+        const JsonProductos = JSON.stringify(productosElegidos);
         // almacenamos en localStorage
-        window.localStorage.setItem("productosElegidos", JsonProductos)
-        window.dispatchEvent(new Event('storage'))
+        if (window.localStorage) {
+            window.localStorage.setItem("productosElegidos", JsonProductos);
+        }
     };
 
+    // usamos el useEffect para actualizar el localStorage y el totalPrecio
+    useEffect(() => {
+        guardarLocalStorage();
+        totalPrecioFunctions();
+    }, [productosElegidos]);
+    
+
     return(
-        <CartContext.Provider value={{limpiarItem, productosElegidos, initialProductosElegidos, guardarLocalStorage, limpiarCarrito, itemEnCarrito,  eliminarItem, totalPrecio, agregarProducto, localStorage}}>
+        <CartContext.Provider value={{limpiarItem, totalPrecioFunctions, totalPrecio, productosElegidos, initialProductosElegidos, guardarLocalStorage, limpiarCarrito, itemEnCarrito,  eliminarItem, agregarProducto, localStorage}}>
         {children}
         </CartContext.Provider>
     )

@@ -8,10 +8,10 @@ import { CartContext } from '../../../context/CartContext';
 
 function Example(children) {
     const [show, setShow] = useState(false);
-    const {productosElegidos, limpiarItem, limpiarCarrito, totalPrecio, agregarProducto, eliminarItem, itemEnCarrito} = useContext(CartContext)
+    let {productosElegidos, limpiarItem, limpiarCarrito, totalPrecio, totalPrecioFunctions, agregarProducto, eliminarItem, itemEnCarrito} = useContext(CartContext)
 
     
-    console.log(totalPrecio)
+    console.log("modal" + totalPrecio)
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
