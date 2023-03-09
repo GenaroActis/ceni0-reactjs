@@ -10,8 +10,6 @@ function Example(children) {
     const [show, setShow] = useState(false);
     let {productosElegidos, limpiarItem, limpiarCarrito, totalPrecio, totalPrecioFunctions, agregarProducto, eliminarItem, itemEnCarrito} = useContext(CartContext)
 
-    
-    console.log("modal" + totalPrecio)
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -64,9 +62,9 @@ function Example(children) {
                 <Button variant="danger" onClick={handleClose}>
                     Cerrar
                 </Button>
-                {productosElegidos.length === 0? (
+                {(productosElegidos.length === 0) ? 
                     console.log("vacio")
-                ):(
+                :
                 <>
                 <Button variant="danger" onClick={limpiarCarrito}>
                     vaciar carrito
@@ -78,7 +76,7 @@ function Example(children) {
                 </Link>
                 <h1 className='card-text shadow-lg p-3 bg-white rounded'>Total ${totalPrecio}</h1>
                 </>
-                )}
+                }
             </Modal.Footer>
         </Modal>
         <ContadorCarrito/>

@@ -21,7 +21,7 @@ const  Producto = (children) => {
     // fetch al link del json
     useEffect(() => {
         
-        fetch('https://res.cloudinary.com/dsdicaf5h/raw/upload/v1678109841/cenicero/productos_n94wu5.json')
+        fetch('https://res.cloudinary.com/dsdicaf5h/raw/upload/v1678377920/cenicero/productos_fm4ugd.json')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');

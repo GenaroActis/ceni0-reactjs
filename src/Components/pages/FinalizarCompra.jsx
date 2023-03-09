@@ -1,50 +1,106 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import {CartContext} from '../../context/CartContext';
-import Alert from 'react-bootstrap/Alert';
+import { ToastContainer, toast } from 'react-toastify';
+import emailjs from '@emailjs/browser';
+import Spinner from 'react-bootstrap/Spinner';
     
-    const userData = [];
 
 const FinalizarCompra = () => {
-    const {productosElegidos, totalPrecio} = useContext(CartContext)
+    const {productosElegidos, totalPrecio, limpiarCarrito} = useContext(CartContext)
+    const userData = [];
+    
+    const notify1 = () => toast.error('Completar Datos!', {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+    }
+    );
 
-    const [nombre, setNombre] = useState('');
-    const [email, setEmail] = useState('');
+    const notify2 = () => toast.error('error al enviar mail!', {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+    }
+    );
 
+    const notify3 = () => toast.success('Compra Realizada con exito!', {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+    }
+    );
 
-    const submit = (event) => {
+    const [user_name, setNombre] = useState('');
+    const [user_email, setEmail] = useState('');
+    
+    const spinner = document.getElementById('spinner')
+
+    const sendEmail = (event) => {
         event.preventDefault();
-        if(email === '' || nombre === ''){
+        if(user_email === '' || user_name === ''){
             console.log("rellenar campos")
+            notify1();
         } else{
-            // generamos una exprecion regular y validamos el email
-            let expReg= /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
-            let valido = expReg.test(email)
-            console.log(valido)
-            if(valido === true){
-                // si el email es valido guardamos la información del usuario en variables
-                userData.push({ nombre, email });
-                console.log(userData);
-            }else {
-                console.log(userData)
-            }
+            // si el email es valido guardamos la información del usuario en variables
+            userData.push({ user_name, user_email });
+            console.log(userData);
+            // hacemos uso de emailjs
+            emailjs.sendForm("service_hk938ah","template_nv80xgt", event.target, 'rjRJ6bGSxalv96eIB')
+            .then((result) => {
+                console.log(result.text);
+                spinner.classList.add("container-fluid");
+                setTimeout(()=>{
+                    spinner.classList.remove("container-fluid")
+                    spinner.classList.add("container-fluid-hidden");
+                    notify3()
+                }, 3000)
+                setTimeout(()=>{
+                    limpiarCarrito();
+                    window.location.href = "/";
+                },5000)
+            }, (error) => {
+                console.log(error.text);
+                notify2();
+            });
+            
         }
     }
 
 
 
     return (
-        <form id="form" onSubmit={submit}>
+    <>
+        <div className='container-fluid-hidden' id='spinner'>
+            <h1>Procesando Compra...</h1>
+            <Spinner className='spinner' animation="border"/>
+        </div>
+        <form id="form" onSubmit={sendEmail}>
             <div className="form-group mt-5">
                 <label htmlFor="cliente" className="col-12 col-md-2 col-form-label h2">Cliente :</label>
                     <div className="col-12 col-md-10">
-                        <input type="text" className="form-control" id="persona" placeholder="Nombre y Apellido"  onChange={(event) => setNombre(event.target.value)} />
+                        <input type="text" name="user_name" className="form-control" id="persona" placeholder="Nombre y Apellido"  onChange={(event) => setNombre(event.target.value)} />
                     </div>
                 </div>
                 <div className="form-group">
                     <label htmlFor="email" className="col-12 col-md-2 col-form-label h2">Correo :</label>
                     <div className="col-12 col-md-10">
-                        <input type="text" className="form-control" id="email" placeholder="Correo Electronico" onChange={(event) => setEmail(event.target.value)}/>
+                        <input type="email" name="user_email" className="form-control" id="email" placeholder="Correo Electronico" onChange={(event) => setEmail(event.target.value)}/>
                     </div>
                 </div>
             <div  className="form-group table-responsive">
@@ -80,15 +136,15 @@ const FinalizarCompra = () => {
                         <Link className="btn btn-warning btn-block" aria-current="page" to={'/Productos'}>Seguir Comprando</Link>
                     </div>
                     <div className="p-2">
-                        <button className="btn btn-success btn-block" id="button" onClick={
-                            console.log("submit")
-                        }>
-                            Finalizar Compra
-                        </button>
+                        
+                            <button className="btn btn-success btn-block" id="button"> Finalizar Compra
+                            </button>
+                            <ToastContainer />
                     </div>
                 </div>
             </div>
         </form>
+    </>
     )
 }
 

@@ -9,7 +9,7 @@ function ContadorCarrito(props) {
     
     let initialCantidad = 0;
     if (productosElegidos.length === 0 ){
-        console.log("Contador array vacio")
+        console.log("array vacio")
     }else{
     initialCantidad = initialProductosElegidos.reduce((acumulador, product) => acumulador + product.elegidos, 0)
     }

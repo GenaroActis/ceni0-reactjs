@@ -36,13 +36,12 @@ const CartProvider = ({children}) =>{
 
     let [productosElegidos, setProductosElegidos] = useState(initialProductosElegidos)
 
-    console.log(productosElegidos)
 
     const itemEnCarrito = (id) => {
         return productosElegidos.find((product) => product.id === id) || null;
     };
 
-    console.log(productosElegidos)
+
 
     const agregarProducto = (product) => {
         const itemParaActualizar = itemEnCarrito(product.id);
@@ -60,7 +59,6 @@ const CartProvider = ({children}) =>{
                 setProductosElegidos([...productosElegidos]);
                 notify1()
                 }
-                
             }
             // si el elemento no existe ya en el array productosElegidos que....
             else{
@@ -87,7 +85,7 @@ const CartProvider = ({children}) =>{
 
     const eliminarItem = (prodId) => {
         let itemParaActualizar = productosElegidos.find((product) => product.id === prodId);
-        console.log(itemParaActualizar)
+        console.log(productosElegidos)
         // si la cantidad es menos a dos limpiamos el producto
         if (itemParaActualizar.elegidos < 2 ){
             productosElegidos = productosElegidos.filter((product) => product.id !== prodId);
@@ -111,13 +109,11 @@ const CartProvider = ({children}) =>{
 
     let [totalPrecio, setTotalPrecio] = useState(0);
 
-    const totalPrecioFunctions = () =>{
-        if (productosElegidos.length === 0){
-            console.log("array vacio")
-        } else {
-            totalPrecio = productosElegidos.reduce((acumulador, product) => acumulador + product.precioSubTotal, 0);
-            setTotalPrecio(totalPrecio);
-        }
+    const totalPrecioFunctions = () => {
+        (productosElegidos.length === 0) ? console.log("array vacio") :
+        totalPrecio = productosElegidos.reduce((acumulador, product) => acumulador + product.precioSubTotal, 0);
+        setTotalPrecio(totalPrecio);
+        console.log("total precio $" + totalPrecio)
     }
     const guardarLocalStorage = () => {
         // convertimos los objetos en json

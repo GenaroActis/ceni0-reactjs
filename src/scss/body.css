@@ -49,4 +49,20 @@
   #productos a {
     width: 90vw;
   }
+}
+.container-fluid-hidden {
+  display: none;
+}
+
+.container-fluid {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  flex-direction: column;
+  align-items: center;
+}
+.container-fluid .spinner {
+  width: 50vw;
+  height: 50vw;
 }/*# sourceMappingURL=body.css.map */
