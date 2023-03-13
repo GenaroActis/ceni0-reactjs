@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
+import {doc, getDoc, getDocs, getFirestore, collection} from 'firebase/firestore'
+import Spinner from 'react-bootstrap/Spinner';
 
 const Cards = () => {
     const [cardsProducts, setCardsProducts] = useState([]);
     const [categoria, setCategoria] = useState('todos');
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch('https://res.cloudinary.com/dsdicaf5h/raw/upload/v1678377920/cenicero/productos_fm4ugd.json')
-        .then((response) => {
-            if (!response.ok) {
-            throw new Error('Network response was not ok');
+        const db = getFirestore()
+        const cardsProductsRef = collection(db, "items")
+        getDocs(cardsProductsRef).then((snapshot)=>{
+            if(snapshot.docs.id === undefined){
+                console.log("cargando productos...")
             }
-            return response.json();
+            setCardsProducts(snapshot.docs.map((doc) => ({id:doc.id, ...doc.data()}) ))
         })
-        .then((dataJson) => setCardsProducts(dataJson.results))
-        .catch((error) => console.log('Error fetching data: ', error));
+        .finally(() => setLoading(false));
     }, []);
+
+    console.log(cardsProducts)
 
     const productosFiltrados = categoria === 'todos' ? cardsProducts : cardsProducts.filter((producto) => producto.categoria === categoria);
 
@@ -24,19 +29,36 @@ const Cards = () => {
         setCategoria(nuevaCategoria);
     };
 
+    
+    if (loading === true){
+        return (
+        <div className='container-fluid' id='spinner'>
+            <h1>Cargando...</h1>
+        <Spinner className='spinner' animation="border"/>
+        </div>
+        )
+    }
+
+
     return (
     <>
-    <div className='d-flex flex-column align-items-center mt-5'>
-        <Dropdown>
-            <Dropdown.Toggle variant="success" id="dropdown-basic">
-                Categorias
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-                <Dropdown.Item onClick={() => clickCategoria('todos')} category="Todo">Todos</Dropdown.Item>
-                <Dropdown.Item onClick={() => clickCategoria('chomba')} category="Chombas">Chombas</Dropdown.Item>
-                <Dropdown.Item onClick={() => clickCategoria('buzo')} category="Buzos">Buzos</Dropdown.Item>
-            </Dropdown.Menu>
-        </Dropdown>
+    <div className='d-flex flex-column justify-content-center align-items-center mt-5'>
+        <div className='d-flex flex-column justify-content-center align-items-center mt-5' >
+            <Dropdown className='d-flex justify-content-center'>
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    Categorias
+                </Dropdown.Toggle>
+                <Dropdown.Menu  className='d-flex flex-column text-center align-self-center' id="dropDown">
+                    <Dropdown.Item onClick={() => clickCategoria('todos')} >Todos</Dropdown.Item>
+                    <Dropdown.Item onClick={() => clickCategoria('chomba')} >Chombas</Dropdown.Item>
+                    <Dropdown.Item onClick={() => clickCategoria('remera')} >Remeras</Dropdown.Item>
+                    <Dropdown.Item onClick={() => clickCategoria('gorra')} >Gorras</Dropdown.Item>
+                    <Dropdown.Item onClick={() => clickCategoria('campera')} >Camperas</Dropdown.Item>
+                    <Dropdown.Item onClick={() => clickCategoria('bermuda')} >Bermudas</Dropdown.Item>
+                    <Dropdown.Item onClick={() => clickCategoria('camisa')} >Camisas</Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
+        </div>
             <div className="row" id="productos">
             {productosFiltrados.map((product) => (
                 <Link key={product.id} className="nav-link" aria-current="page" to={`/Producto/${product.id}`}>

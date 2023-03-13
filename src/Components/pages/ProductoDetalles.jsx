@@ -5,38 +5,45 @@ import Card from 'react-bootstrap/Card';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {CartContext} from '../../context/CartContext';
-
-
+import {doc, getDoc, getDocs, getFirestore, collection} from 'firebase/firestore'
+import Spinner from 'react-bootstrap/Spinner';
 
 
 
 const  Producto = (children) => {
     const {agregarProducto, guardarLocalStorage, productosElegidos, itemEnCarrito} = useContext(CartContext);
-
+    const [loading, setLoading] = useState(true);
     // toastify
     
-    const [cardsProducts, setCardsProducts] = useState([])
+    const [product, setProduct] = useState({})
     const { id } = useParams();
     
     // fetch al link del json
     useEffect(() => {
-        fetch('https://res.cloudinary.com/dsdicaf5h/raw/upload/v1678377920/cenicero/productos_fm4ugd.json')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
+        const db = getFirestore()
+        const cardsProductsRef = doc(db, "items", id)
+        getDoc(cardsProductsRef).then((snapshot)=>{
+            if(snapshot.exists()){
+                setProduct({id: snapshot.id, ...snapshot.data()})
             }
-            return response.json();
         })
-        .then(dataJson => setCardsProducts(dataJson.results))
-        .catch(error => console.log('Error fetching data: ', error));
+        .finally(() => setLoading(false));
     }, []);
 
-    const productoFiltrado = cardsProducts.filter(product => String(product.id) === id )
+    if (loading === true){
+        return (
+        
+        <div className='container-fluid' id='spinner'>
+            <h1>Cargando...</h1>
+        <Spinner className='spinner' animation="border"/>
+        </div>
+        )
+    }
+
+    // const productoFiltrado = cardsProducts.filter(product => String(product.id) === id )
     return (
         <div key={id} id='detalleProducto'>
-            {
-            productoFiltrado.map(product =>(
-                // carousel boostrap
+            <>
                 <React.Fragment key={product.id}>
                     <div id='carousel'>
                         <Carousel variant="dark rounded">
@@ -52,6 +59,13 @@ const  Producto = (children) => {
                                 className="d-block w-100 rounded"
                                 src={product.img2}
                                 alt="Second slide"
+                                />
+                            </Carousel.Item>
+                            <Carousel.Item>
+                                <img
+                                className="d-block w-100 rounded"
+                                src={product.img3}
+                                alt="Third slide"
                                 />
                             </Carousel.Item>
                         </Carousel>
@@ -94,8 +108,7 @@ const  Producto = (children) => {
                         </Card>
                     </div>
                 </React.Fragment>
-            ))
-            };
+            </>
         </div>
     )
 };
