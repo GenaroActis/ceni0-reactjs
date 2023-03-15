@@ -95,10 +95,10 @@ const FinalizarCompra = () => {
                     spinner.classList.add("container-fluid-hidden");
                     notify3()
                 }, 3000)
-                // setTimeout(()=>{
-                //     limpiarCarrito();
-                //     window.location.href = "/";
-                // },5000)
+                setTimeout(()=>{
+                    limpiarCarrito();
+                    window.location.href = "/";
+                },5000)
             }, (error) => {
                 console.log(error.text);
                 notify2();
@@ -131,7 +131,7 @@ const FinalizarCompra = () => {
                 <div className="form-group">
                     <label htmlFor="phone" className="col-12 col-md-2 col-form-label h2">Celular :</label>
                     <div className="col-12 col-md-10">
-                        <input type="tel" pattern='[0-9] {3} - [0-9] {2} - [0-9]{3}' name="user_phone" className="form-control" id="phone" placeholder="Numero" onChange={(event) => setPhone(event.target.value)}/>
+                        <input type="tel" name="user_phone" className="form-control" id="phone" placeholder="Numero" onChange={(event) => setPhone(event.target.value)}/>
                     </div>
                 </div>
             <div  className="form-group table-responsive">

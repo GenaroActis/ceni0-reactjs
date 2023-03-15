@@ -102,7 +102,6 @@ const  Producto = (children) => {
                                         console.log(productosElegidos)
                                 }} type="button" className='btn btn-lg btn-outline-primary'>agregar</button>
                                 </div>
-                                {/* // toastify */}
                                 <ToastContainer />
                             </Card.Body>
                         </Card>

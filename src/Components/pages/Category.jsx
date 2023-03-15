@@ -41,7 +41,8 @@ const Category = () => {
         navigate (`/Category/${nuevaCategoria}`)
     };
 
-    const productosFiltrados = categorias.CategoryId === 'todos' ? cardsProducts : cardsProducts.filter((producto) => producto.categoria === categorias.CategoryId);
+    const productosFiltrados = categorias.CategoryId === 'todos' ? cardsProducts : 
+    cardsProducts.filter((producto) => producto.categoria === categorias.CategoryId);
     console.log(productosFiltrados)
 
     return (
