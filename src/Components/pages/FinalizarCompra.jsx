@@ -4,12 +4,17 @@ import {CartContext} from '../../context/CartContext';
 import { ToastContainer, toast } from 'react-toastify';
 import emailjs from '@emailjs/browser';
 import Spinner from 'react-bootstrap/Spinner';
+import { addDoc, collection, getFirestore } from 'firebase/firestore';
     
 
 const FinalizarCompra = () => {
     const {productosElegidos, totalPrecio, limpiarCarrito} = useContext(CartContext)
     const userData = [];
     
+    const db = getFirestore();
+
+    const ordersCollection = collection(db, 'orders')
+
     const notify1 = () => toast.error('Completar Datos!', {
         position: "top-right",
         autoClose: 1000,
@@ -46,20 +51,40 @@ const FinalizarCompra = () => {
     }
     );
 
-    const [user_name, setNombre] = useState('');
+    const [user_name, setName] = useState('');
     const [user_email, setEmail] = useState('');
-    
+    const [user_phone, setPhone] = useState('');
+
     const spinner = document.getElementById('spinner')
 
     const sendEmail = (event) => {
         event.preventDefault();
+
         if(user_email === '' || user_name === ''){
             console.log("rellenar campos")
             notify1();
         } else{
             // si el email es valido guardamos la información del usuario en variables
-            userData.push({ user_name, user_email });
+            userData.push({ user_name, user_email, user_phone });
             console.log(userData);
+            
+            // enviamos la orden a la base de datos
+            const order = {
+                buyer: {
+                    name: user_name,
+                    phone: user_phone,
+                    email: user_email
+                },
+                items: productosElegidos,
+                total: totalPrecio
+            }
+            addDoc(ordersCollection, order)
+            .then ((docRef) =>{
+                console.log('Documento enviado. ID:', docRef.id);
+            }).catch((e) => {
+                console.log('Error al agregar el documento', e);
+            });
+
             // hacemos uso de emailjs
             emailjs.sendForm("service_hk938ah","template_nv80xgt", event.target, 'rjRJ6bGSxalv96eIB')
             .then((result) => {
@@ -70,10 +95,10 @@ const FinalizarCompra = () => {
                     spinner.classList.add("container-fluid-hidden");
                     notify3()
                 }, 3000)
-                setTimeout(()=>{
-                    limpiarCarrito();
-                    window.location.href = "/";
-                },5000)
+                // setTimeout(()=>{
+                //     limpiarCarrito();
+                //     window.location.href = "/";
+                // },5000)
             }, (error) => {
                 console.log(error.text);
                 notify2();
@@ -94,13 +119,19 @@ const FinalizarCompra = () => {
             <div className="form-group mt-5">
                 <label htmlFor="cliente" className="col-12 col-md-2 col-form-label h2">Cliente :</label>
                     <div className="col-12 col-md-10">
-                        <input type="text" name="user_name" className="form-control" id="persona" placeholder="Nombre y Apellido"  onChange={(event) => setNombre(event.target.value)} />
+                        <input type="text" name="user_name" className="form-control" id="persona" placeholder="Nombre y Apellido"  onChange={(event) => setName(event.target.value)} />
                     </div>
                 </div>
                 <div className="form-group">
                     <label htmlFor="email" className="col-12 col-md-2 col-form-label h2">Correo :</label>
                     <div className="col-12 col-md-10">
                         <input type="email" name="user_email" className="form-control" id="email" placeholder="Correo Electronico" onChange={(event) => setEmail(event.target.value)}/>
+                    </div>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="phone" className="col-12 col-md-2 col-form-label h2">Celular :</label>
+                    <div className="col-12 col-md-10">
+                        <input type="tel" pattern='[0-9] {3} - [0-9] {2} - [0-9]{3}' name="user_phone" className="form-control" id="phone" placeholder="Numero" onChange={(event) => setPhone(event.target.value)}/>
                     </div>
                 </div>
             <div  className="form-group table-responsive">

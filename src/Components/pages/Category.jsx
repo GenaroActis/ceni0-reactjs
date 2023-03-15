@@ -1,13 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import Dropdown from 'react-bootstrap/Dropdown';
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom';
 import {doc, getDoc, getDocs, getFirestore, collection} from 'firebase/firestore'
+import Dropdown from 'react-bootstrap/Dropdown';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
 
-const Cards = () => {
+const Category = () => {
+    
+    const categorias = useParams();
     const [cardsProducts, setCardsProducts] = useState([]);
-    const [categoria, setCategoria] = useState('todos');
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
+    const [categoria, setCategoria] = useState('todos');
 
     useEffect(() => {
         const db = getFirestore()
@@ -21,15 +26,6 @@ const Cards = () => {
         .finally(() => setLoading(false));
     }, []);
 
-    console.log(cardsProducts)
-
-    const productosFiltrados = categoria === 'todos' ? cardsProducts : cardsProducts.filter((producto) => producto.categoria === categoria);
-
-    const clickCategoria = (nuevaCategoria) => {
-        setCategoria(nuevaCategoria);
-    };
-
-    
     if (loading === true){
         return (
         <div className='container-fluid' id='spinner'>
@@ -40,10 +36,17 @@ const Cards = () => {
     }
 
 
+    const clickCategoria = (nuevaCategoria) => {
+        setCategoria(nuevaCategoria);
+        navigate (`/Category/${nuevaCategoria}`)
+    };
+
+    const productosFiltrados = categorias.CategoryId === 'todos' ? cardsProducts : cardsProducts.filter((producto) => producto.categoria === categorias.CategoryId);
+    console.log(productosFiltrados)
+
     return (
-    <>
+        <>
     <div className='d-flex flex-column justify-content-center align-items-center mt-5'>
-        <div className='d-flex flex-column justify-content-center align-items-center mt-5' >
             <Dropdown className='d-flex justify-content-center'>
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                     Categorias
@@ -58,7 +61,6 @@ const Cards = () => {
                     <Dropdown.Item onClick={() => clickCategoria('camisa')} >Camisas</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
-        </div>
             <div className="row" id="productos">
             {productosFiltrados.map((product) => (
                 <Link key={product.id} className="nav-link" aria-current="page" to={`/Producto/${product.id}`}>
@@ -76,7 +78,7 @@ const Cards = () => {
             </div>
         </div>
     </>
-    );
-};
+    )
+}
 
-export default Cards;
+export default Category

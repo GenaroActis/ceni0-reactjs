@@ -5,7 +5,7 @@ const Footer = () => {
     return (
         <footer id='footer' className="py-3">
             <ul className="nav justify-content-center border-bottom pb-3 mb-3">
-                <li className="nav-item"><Link className="nav-link px-2 text-white" aria-current="page" to={`/Productos`}>Productos</Link></li>
+                <li className="nav-item"><Link className="nav-link px-2 text-white" aria-current="page" to={`/Category/todos`}>Productos</Link></li>
                 <li className="nav-item"><Link className="nav-link px-2 text-white" aria-current="page" to={`/`}>Inicio</Link></li>
                 <li className="nav-item"><Link className="nav-link px-2 text-white" aria-current="page" to={`/Nosotros`}>Nosotros</Link></li>
             </ul>
