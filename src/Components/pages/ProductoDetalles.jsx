@@ -11,7 +11,7 @@ import Spinner from 'react-bootstrap/Spinner';
 
 
 const  Producto = (children) => {
-    const {agregarProducto, guardarLocalStorage, productosElegidos, itemEnCarrito} = useContext(CartContext);
+    const {agregarProducto, agregado, guardarLocalStorage, productosElegidos, itemEnCarrito} = useContext(CartContext);
     const [loading, setLoading] = useState(true);
     // toastify
     
@@ -30,6 +30,7 @@ const  Producto = (children) => {
         .finally(() => setLoading(false));
     }, []);
 
+    // si esta cargando mostramos un spinner
     if (loading === true){
         return (
         
@@ -85,21 +86,9 @@ const  Producto = (children) => {
                                 <div className="d-grid gap-2 col-6 mx-auto">
                                 <button id='botonAgregar' onClick={()=>{
                                     // funcion agregado en boton
-                                    const botonAgregar = document.querySelector("#botonAgregar")
-                                    function agregado() {
-                                        botonAgregar.textContent = "agregado";
-                                        botonAgregar.style.backgroundColor = "#da8a0d";
-                                        botonAgregar.style.color = "white";
-                                        setTimeout(function() {
-                                            botonAgregar.textContent = "agregar";
-                                            botonAgregar.style.backgroundColor = "white";
-                                            botonAgregar.style.color = "#0d6efd";
-                                        }, 3000);
-                                    };
                                     agregado()
                                     // llamamos la funcion de agregar producto y guardar en el LocalStorage
                                         agregarProducto(product);
-                                        console.log(productosElegidos)
                                 }} type="button" className='btn btn-lg btn-outline-primary'>agregar</button>
                                 </div>
                                 <ToastContainer />

@@ -55,8 +55,7 @@
   height: 100%;
   line-height: 140px;
   font-size: 85px;
-  -webkit-animation: animated 10s linear infinite;
-          animation: animated 10s linear infinite;
+  animation: animated 10s linear infinite;
 }
 .divTodos .TodosProd2 {
   width: 100%;
@@ -77,10 +76,8 @@
   height: 100%;
   line-height: 140px;
   font-size: 85px;
-  -webkit-animation: animated 10s linear infinite;
-          animation: animated 10s linear infinite;
-  -webkit-animation-delay: 5s;
-          animation-delay: 5s;
+  animation: animated 10s linear infinite;
+  animation-delay: 5s;
 }
 
 .divTodos:hover {
@@ -94,14 +91,6 @@
   }
   .divTodos .TodosProd2 span {
     font-size: 50px;
-  }
-}
-@-webkit-keyframes animated {
-  0% {
-    transform: translate(0, 0);
-  }
-  100% {
-    transform: translate(-100%, 0);
   }
 }
 @keyframes animated {

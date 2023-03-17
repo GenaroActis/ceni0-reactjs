@@ -2,25 +2,23 @@ import React, { useState, useEffect, useContext } from 'react';
 import { CartContext } from '../../../context/CartContext';
 
 
-function ContadorCarrito(props) {
+function ContadorCarrito() {
     let { productosElegidos, initialProductosElegidos } = useContext(CartContext);
     const [cargando, setCargando] = useState(true);
 
-    
+    // recuperamos la cantidad elegida
     let initialCantidad = 0;
-    if (productosElegidos.length === 0 ){
-        console.log("array vacio")
-    }else{
-    initialCantidad = initialProductosElegidos.reduce((acumulador, product) => acumulador + product.elegidos, 0)
-    }
+    if (productosElegidos.length > 0 ) {
+        initialCantidad = initialProductosElegidos.reduce((acumulador, product) => acumulador + product.elegidos, 0)
+    } 
+
     const [totalCantidadNum, setTotalCantidadNum] = useState(initialCantidad);
 
+    // actualizamos con useEffect
     useEffect(() => {
         if (cargando) {
         setCargando(false);
-        return;
         }
-
     setTotalCantidadNum(productosElegidos.reduce((acumulador, product) => acumulador + product.elegidos, 0));
     }, [productosElegidos]);
 

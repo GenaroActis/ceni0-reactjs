@@ -9,15 +9,15 @@ import { addDoc, collection, getFirestore } from 'firebase/firestore';
 
 const FinalizarCompra = () => {
     const {productosElegidos, totalPrecio, limpiarCarrito} = useContext(CartContext)
-    const userData = [];
     
     const db = getFirestore();
 
     const ordersCollection = collection(db, 'orders')
 
+    // toastify
     const notify1 = () => toast.error('Completar Datos!', {
         position: "top-right",
-        autoClose: 1000,
+        autoClose: 700,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -27,7 +27,7 @@ const FinalizarCompra = () => {
     }
     );
 
-    const notify2 = () => toast.error('error al enviar mail!', {
+    const notify2 = () => toast.error('error al enviar la compra!', {
         position: "top-right",
         autoClose: 1000,
         hideProgressBar: false,
@@ -51,23 +51,20 @@ const FinalizarCompra = () => {
     }
     );
 
+
     const [user_name, setName] = useState('');
     const [user_email, setEmail] = useState('');
     const [user_phone, setPhone] = useState('');
 
+    
     const spinner = document.getElementById('spinner')
 
     const sendEmail = (event) => {
         event.preventDefault();
 
         if(user_email === '' || user_name === ''){
-            console.log("rellenar campos")
             notify1();
         } else{
-            // si el email es valido guardamos la información del usuario en variables
-            userData.push({ user_name, user_email, user_phone });
-            console.log(userData);
-            
             // enviamos la orden a la base de datos
             const order = {
                 buyer: {
@@ -79,16 +76,10 @@ const FinalizarCompra = () => {
                 total: totalPrecio
             }
             addDoc(ordersCollection, order)
-            .then ((docRef) =>{
-                console.log('Documento enviado. ID:', docRef.id);
-            }).catch((e) => {
-                console.log('Error al agregar el documento', e);
-            });
-
+            .then (() =>{
             // hacemos uso de emailjs
             emailjs.sendForm("service_hk938ah","template_nv80xgt", event.target, 'rjRJ6bGSxalv96eIB')
             .then((result) => {
-                console.log(result.text);
                 spinner.classList.add("container-fluid");
                 setTimeout(()=>{
                     spinner.classList.remove("container-fluid")
@@ -103,7 +94,9 @@ const FinalizarCompra = () => {
                 console.log(error.text);
                 notify2();
             });
-            
+            }).catch((e) => {
+                notify2();
+            });
         }
     }
 
@@ -115,7 +108,7 @@ const FinalizarCompra = () => {
             <h1>Procesando Compra...</h1>
             <Spinner className='spinner' animation="border"/>
         </div>
-        <form id="form" onSubmit={sendEmail}>
+        <form id="form" className='m-5' onSubmit={sendEmail}>
             <div className="form-group mt-5">
                 <label htmlFor="cliente" className="col-12 col-md-2 col-form-label h2">Cliente :</label>
                     <div className="col-12 col-md-10">

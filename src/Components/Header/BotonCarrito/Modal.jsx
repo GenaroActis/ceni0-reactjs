@@ -40,15 +40,18 @@ function Example(children) {
                         <button className='btn btn-outline-dark mr-3' onClick={()=>{agregarProducto(product)}}>+</button>
                     <h3 className='mb-0'>Cantidad {product.elegidos}</h3>
                         <button className='btn btn-outline-dark pr-3' onClick={()=>{
-                            let id = product.id
-                            eliminarItem(id)
+                            let prodId = product.id
+                            eliminarItem(prodId)
                             }}>-</button>
                     </div>
                     <button className='btn btn-danger mt-2 mb-2' onClick={()=>{
+
                             let prodId = product.id
                             limpiarItem(prodId)
                             }}>Eliminar Producto</button>
-                    {product.elegidos === 1?(
+
+                    {/* {si productos elegidos es igual a uno muestra el precio unitario sino sub total y unitario */
+                    product.elegidos === 1?(
                     <h1 className='card-text shadow-lg p-3 bg-white rounded'>${product.precio} </h1>
                     ):(
                         <h2 className='card-text shadow-lg p-3 bg-white rounded'>por unidad ${product.precio} <br /> Total  ${product.precioSubTotal} </h2>
@@ -59,13 +62,15 @@ function Example(children) {
             }
         </Modal.Body>
             <Modal.Footer>
+                {(productosElegidos.length === 0) ? 
+                    <Button variant="danger" onClick={handleClose}>
+                        Cerrar
+                    </Button>
+                :
+                <>
                 <Button variant="danger" onClick={handleClose}>
                     Cerrar
                 </Button>
-                {(productosElegidos.length === 0) ? 
-                    console.log("vacio")
-                :
-                <>
                 <Button variant="danger" onClick={limpiarCarrito}>
                     vaciar carrito
                 </Button>
