@@ -140,4 +140,12 @@
   .divTodos .TodosProd2 span {
     font-size: 50px;
   }
+}
+@media screen and (max-width: 400px) {
+  .divTodos .TodosProd span {
+    font-size: 40px;
+  }
+  .divTodos .TodosProd2 span {
+    font-size: 40px;
+  }
 }/*# sourceMappingURL=Inicio.css.map */

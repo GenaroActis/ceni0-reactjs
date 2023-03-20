@@ -88,7 +88,7 @@ const FinalizarCompra = () => {
                 }, 3000)
                 setTimeout(()=>{
                     limpiarCarrito();
-                    window.location.href = "/";
+                    window.location.href = "/ceni0-reactjs";
                 },5000)
             }, (error) => {
                 console.log(error.text);

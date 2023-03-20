@@ -16,7 +16,7 @@ const Header = () => {
                 <div id="menu">
                     <ul className="nav nav-pills">
                         <li className="nav-item"><Link className="nav-link" aria-current="page" to={'/Category/todos'}>Productos</Link></li>
-                        <li className="nav-item" id='navInicio'><Link className="nav-link" aria-current="page" to={'/'}>Inicio</Link></li>
+                        <li className="nav-item" id='navInicio'><Link className="nav-link" aria-current="page" to={'/ceni0-reactjs'}>Inicio</Link></li>
                         <li className="nav-item"><Link className="nav-link" aria-current="page" to={'/Nosotros'}>Nosotros</Link></li>
                     </ul>
                 </div>

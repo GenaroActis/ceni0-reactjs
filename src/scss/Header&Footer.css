@@ -30,14 +30,6 @@ header {
   display: flex;
   flex-direction: column;
 }
-#header #botonCarrito #buttonC {
-  width: 70px;
-  height: auto;
-  margin-left: 3vw;
-}
-#header #botonCarrito #buttonC img {
-  width: 50px;
-}
 #header #menu {
   border: 2px solid #f1f1f1;
   border-radius: 10px;
@@ -135,4 +127,18 @@ header {
   justify-content: center;
   text-align: center;
   border-top: #da8a0d solid 10px;
+}
+
+@media screen and (max-width: 500px) {
+  #header .divButtons {
+    left: 0%;
+  }
+}
+@media screen and (max-width: 365px) {
+  #header .divButtons {
+    left: -2%;
+  }
+  #header .divButtons div {
+    right: 20px;
+  }
 }/*# sourceMappingURL=Header&Footer.css.map */
