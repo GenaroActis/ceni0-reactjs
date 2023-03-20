@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/ceni0-reactjs/static/css/main.4054560c.css",
-    "main.js": "/ceni0-reactjs/static/js/main.6e8540bf.js",
+    "main.js": "/ceni0-reactjs/static/js/main.217b2953.js",
     "index.html": "/ceni0-reactjs/index.html",
     "main.4054560c.css.map": "/ceni0-reactjs/static/css/main.4054560c.css.map",
-    "main.6e8540bf.js.map": "/ceni0-reactjs/static/js/main.6e8540bf.js.map"
+    "main.217b2953.js.map": "/ceni0-reactjs/static/js/main.217b2953.js.map"
   },
   "entrypoints": [
     "static/css/main.4054560c.css",
-    "static/js/main.6e8540bf.js"
+    "static/js/main.217b2953.js"
   ]
 }
