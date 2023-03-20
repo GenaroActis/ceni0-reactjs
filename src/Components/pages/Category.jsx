@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
-import {doc, getDoc, getDocs, getFirestore, collection} from 'firebase/firestore'
+import { getDocs, getFirestore, collection} from 'firebase/firestore'
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
+import { ToastContainer} from 'react-toastify';
 
 const Category = () => {
     
@@ -28,7 +29,7 @@ const Category = () => {
     if (loading === true){
         return (
         <div className='container-fluid' id='spinner'>
-            <h1>Cargando...</h1>
+            <h1>Cargando {categoria}...</h1>
         <Spinner className='spinner' animation="border"/>
         </div>
         )
@@ -69,6 +70,7 @@ const Category = () => {
                     </div>
                 </Link>
             ))}
+            <ToastContainer/>
             </div>
         </div>
     </>

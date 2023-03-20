@@ -10,6 +10,7 @@ import Inicio from './Inicio/Inicio'
 import FinalizarCompra from './pages/FinalizarCompra'
 import CartProvider from '../context/CartContext'
 import Category from './pages/Category'
+import { ToastContainer, toast } from 'react-toastify';
 
 import '../scss/modal.css'
 import '../scss/detalleProductos.css'
@@ -17,7 +18,7 @@ import  '../scss/reset.css'
 import  '../scss/Header&Footer.css'
 import  '../scss/body.css'
 import  '../scss/Inicio.css'
-
+import 'react-toastify/dist/ReactToastify.css';
 
 
 

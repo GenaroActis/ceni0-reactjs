@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Alert from 'react-bootstrap/Alert';
 
 export const CartContext = createContext();
 
@@ -14,7 +15,8 @@ const CartProvider = ({children}) =>{
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
-        progress: undefined,
+        progress: 0,
+        content : 0,
         theme: "colored",
     });
     const notify1 = () => toast.success('Agregado!', {
@@ -24,10 +26,11 @@ const CartProvider = ({children}) =>{
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
-        progress: undefined,
+        progress: 0,
+        content : 0,
         theme: "colored",
     });
-
+    
     // funcion cambio agregar a agregado en boton
     function agregado() {
         const botonAgregar = document.querySelector("#botonAgregar")
@@ -85,6 +88,7 @@ const CartProvider = ({children}) =>{
                         stock : product.stock
                     })
                     notify1()
+                    
                     setProductosElegidos([...productosElegidos]);
             }
     };

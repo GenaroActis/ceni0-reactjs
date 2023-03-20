@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment, useContext} from 'react'
 import { useParams } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel';
 import Card from 'react-bootstrap/Card';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {CartContext} from '../../context/CartContext';
 import {doc, getDoc, getDocs, getFirestore, collection} from 'firebase/firestore'
@@ -91,7 +91,7 @@ const  Producto = (children) => {
                                         agregarProducto(product);
                                 }} type="button" className='btn btn-lg btn-outline-primary'>agregar</button>
                                 </div>
-                                <ToastContainer />
+                                <ToastContainer/>
                             </Card.Body>
                         </Card>
                     </div>

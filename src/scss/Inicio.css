@@ -1,23 +1,26 @@
 #Video {
-  width: 100%;
-  background-image: url(https://res.cloudinary.com/dsdicaf5h/image/upload/v1674159185/cenicero/fondo_apxg6x.png);
-  height: auto;
-  padding-top: 100px;
-  padding-bottom: 5%;
   border-bottom: #da8a0d solid 10px;
   border-top: #da8a0d solid 10px;
   margin-bottom: 10%;
   margin-top: 110px;
+  background-image: url(https://res.cloudinary.com/dsdicaf5h/image/upload/v1674159185/cenicero/fondo_apxg6x.png);
+  background-size: 100%;
+}
+#Video video {
+  width: 100%;
+  height: auto;
+  padding-left: 30vw;
+  padding-right: 30vw;
+  padding-bottom: 5%;
+}
+#Video #products {
+  padding-top: 100px;
+  padding-bottom: 5%;
+  margin-bottom: 110px;
   padding-left: 30vw;
   padding-right: 30vw;
 }
 
-@media screen and (max-width: 1024px) {
-  #Video {
-    padding-left: 0vw;
-    padding-right: 0vw;
-  }
-}
 .divTodos {
   background-image: url(https://res.cloudinary.com/dsdicaf5h/image/upload/v1674159185/cenicero/fondo_apxg6x.png);
   padding-bottom: 5%;
@@ -85,14 +88,6 @@
   text-shadow: 0px 2px 1px rgb(255, 255, 255);
 }
 
-@media screen and (max-width: 694px) {
-  .divTodos .TodosProd span {
-    font-size: 50px;
-  }
-  .divTodos .TodosProd2 span {
-    font-size: 50px;
-  }
-}
 @keyframes animated {
   0% {
     transform: translate(0, 0);
@@ -120,4 +115,29 @@
 
 .botonAgregado {
   background-color: #da8a0d;
+}
+
+@media screen and (max-width: 1024px) {
+  #Video video {
+    padding-left: 0vw;
+    padding-right: 0vw;
+  }
+  #Video #products {
+    padding-left: 5vw;
+    padding-right: 5vw;
+  }
+  .divTodos .TodosProd span {
+    font-size: 70px;
+  }
+  .divTodos .TodosProd2 span {
+    font-size: 70px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .divTodos .TodosProd span {
+    font-size: 50px;
+  }
+  .divTodos .TodosProd2 span {
+    font-size: 50px;
+  }
 }/*# sourceMappingURL=Inicio.css.map */

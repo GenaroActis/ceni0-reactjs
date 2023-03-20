@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { ToastContainer} from 'react-toastify';
 
 const nosotros = () => {
     return (
@@ -14,6 +15,7 @@ const nosotros = () => {
                 <img src="https://res.cloudinary.com/dsdicaf5h/image/upload/v1674159144/cenicero/footer_nozkhv.png" alt="" className='img-fluid' id='imgNosotros' />
             </Link>
         </div>
+        <ToastContainer/>
         </>
     )
 }

@@ -160,14 +160,12 @@ const FinalizarCompra = () => {
                         <Link className="btn btn-warning btn-block" aria-current="page" to={'/Productos'}>Seguir Comprando</Link>
                     </div>
                     <div className="p-2">
-                        
-                            <button className="btn btn-success btn-block" id="button"> Finalizar Compra
-                            </button>
-                            <ToastContainer />
+                        <button className="btn btn-success btn-block" id="button"> Finalizar Compra</button>
                     </div>
                 </div>
             </div>
         </form>
+        <ToastContainer/>
     </>
     )
 }
