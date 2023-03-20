@@ -79,6 +79,7 @@ const CartProvider = ({children}) =>{
             else{
                     productosElegidos.push({
                         id : product.id,
+                        talle : product.talle,
                         nombre : product.nombre,
                         precio : product.precio,
                         img1 : product.img1,

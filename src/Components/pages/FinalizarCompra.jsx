@@ -27,7 +27,7 @@ const FinalizarCompra = () => {
     }
     );
 
-    const notify2 = () => toast.error('error al enviar la compra!', {
+    const notify2 = () => toast.error(`error al enviar la compra! Intenta de nuevo mas tarde`, {
         position: "top-right",
         autoClose: 1000,
         hideProgressBar: false,
@@ -65,6 +65,11 @@ const FinalizarCompra = () => {
         if(user_email === '' || user_name === ''){
             notify1();
         } else{
+            spinner.classList.add("container-fluid");
+                setTimeout(()=>{
+                    spinner.classList.remove("container-fluid")
+                    spinner.classList.add("container-fluid-hidden");
+                }, 3000)
             // enviamos la orden a la base de datos
             const order = {
                 buyer: {
@@ -79,22 +84,17 @@ const FinalizarCompra = () => {
             .then (() =>{
             // hacemos uso de emailjs
             emailjs.sendForm("service_hk938ah","template_nv80xgt", event.target, 'rjRJ6bGSxalv96eIB')
-            .then((result) => {
-                spinner.classList.add("container-fluid");
-                setTimeout(()=>{
-                    spinner.classList.remove("container-fluid")
-                    spinner.classList.add("container-fluid-hidden");
-                    notify3()
-                }, 3000)
+            .then(() => {
+                notify3()
                 setTimeout(()=>{
                     limpiarCarrito();
                     window.location.href = "/ceni0-reactjs";
-                },5000)
+                },2500)
             }, (error) => {
                 console.log(error.text);
                 notify2();
             });
-            }).catch((e) => {
+            }).catch(() => {
                 notify2();
             });
         }
@@ -165,7 +165,8 @@ const FinalizarCompra = () => {
                 </div>
             </div>
         </form>
-        <ToastContainer/>
+        <ToastContainer
+        />
     </>
     )
 }

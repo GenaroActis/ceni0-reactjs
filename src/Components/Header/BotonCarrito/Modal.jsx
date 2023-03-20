@@ -5,7 +5,6 @@ import ContadorCarrito from './ContadorCarrito'
 import { Link } from 'react-router-dom'
 import { CartContext } from '../../../context/CartContext';
 
-
 function Example(children) {
     const [show, setShow] = useState(false);
     let {productosElegidos, limpiarItem, limpiarCarrito, totalPrecio, totalPrecioFunctions, agregarProducto, eliminarItem, itemEnCarrito} = useContext(CartContext)

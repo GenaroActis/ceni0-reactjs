@@ -62,11 +62,11 @@ const Inicio = () => {
                     }
                     </Carousel>
                 </div>
+                <ToastContainer/>
             <video controls>
                 <source type='video/mp4' src='https://res.cloudinary.com/dsdicaf5h/video/upload/v1677263045/cenicero/Untitled_2_of5elw.mp4'/>
             </video>
         </div>
-        <ToastContainer/>
         </>
     )
 }
