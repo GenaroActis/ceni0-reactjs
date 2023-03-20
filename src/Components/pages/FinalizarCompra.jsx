@@ -87,8 +87,8 @@ const FinalizarCompra = () => {
             .then(() => {
                 notify3()
                 setTimeout(()=>{
-                    limpiarCarrito();
                     window.location.href = "/ceni0-reactjs";
+                    limpiarCarrito();
                 },2500)
             }, (error) => {
                 console.log(error.text);
@@ -165,8 +165,7 @@ const FinalizarCompra = () => {
                 </div>
             </div>
         </form>
-        <ToastContainer
-        />
+        <ToastContainer/>
     </>
     )
 }
