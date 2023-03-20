@@ -45,11 +45,9 @@ function Example(children) {
                             }}>-</button>
                     </div>
                     <button className='btn btn-danger mt-2 mb-2' onClick={()=>{
-
                             let prodId = product.id
                             limpiarItem(prodId)
                             }}>Eliminar Producto</button>
-
                     {/* {si productos elegidos es igual a uno muestra el precio unitario sino sub total y unitario */
                     product.elegidos === 1?(
                     <h1 className='card-text shadow-lg p-3 bg-white rounded'>${product.precio} </h1>

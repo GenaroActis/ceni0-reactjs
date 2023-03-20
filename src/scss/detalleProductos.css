@@ -1,6 +1,6 @@
 #detalleProducto {
-  background-image: url(https://res.cloudinary.com/dsdicaf5h/image/upload/v1674159185/cenicero/fondo_apxg6x.png);
-  background-size: 100vw;
+  background-image: url(https://res.cloudinary.com/dsdicaf5h/image/upload/v1679338143/cenicero/fondo-min_mvyopj.png);
+  background-size: 100%;
   padding-left: 4rem;
   padding-right: 4rem;
   margin-bottom: 10%;
@@ -26,5 +26,17 @@
   #detalleProducto #carousel {
     width: auto;
     margin-right: 0%;
+  }
+}
+@media screen and (max-width: 524px) {
+  #detalleProducto {
+    flex-direction: column;
+  }
+  #detalleProducto #carousel {
+    width: 85vw;
+    margin-right: 0%;
+  }
+  #detalleProducto #cardDetalles {
+    width: 85vw;
   }
 }/*# sourceMappingURL=detalleProductos.css.map */
