@@ -33,10 +33,10 @@
     flex-direction: column;
   }
   #detalleProducto #carousel {
-    width: 85vw;
+    width: 90vw;
     margin-right: 0%;
   }
   #detalleProducto #cardDetalles {
-    width: 85vw;
+    width: 90vw;
   }
 }/*# sourceMappingURL=detalleProductos.css.map */
