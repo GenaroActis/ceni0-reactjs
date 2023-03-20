@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/ceni0-reactjs/static/css/main.4054560c.css",
+    "main.js": "/ceni0-reactjs/static/js/main.6e8540bf.js",
+    "index.html": "/ceni0-reactjs/index.html",
+    "main.4054560c.css.map": "/ceni0-reactjs/static/css/main.4054560c.css.map",
+    "main.6e8540bf.js.map": "/ceni0-reactjs/static/js/main.6e8540bf.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4054560c.css",
+    "static/js/main.6e8540bf.js"
+  ]
+}
