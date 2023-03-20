@@ -1,3 +1,6 @@
+Este es mi proyecto de react js para el curso en CoderHouse, desarrolle un e-commerce con un carrito funcional y una salida de datos que se guardan en firebase 
+las dependencias que utilize son react router dom, react toastify y firestore
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
