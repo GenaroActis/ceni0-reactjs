@@ -32,7 +32,7 @@ const Landing = () => {
                     <Header/>
                     
                     <Routes>
-                        <Route exact path="/" element={<Inicio/>}/>
+                        <Route exact path="/ceni0-reactjs" element={<Inicio/>}/>
                         <Route exact path="/Nosotros" element={<Nosotros/>}/>
                         <Route exact path="/Producto/:id" element={<ProductoDetalles/>}/>
                         <Route exact path="/FinalizarCompra" element={<FinalizarCompra/>}/>
