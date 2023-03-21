@@ -1,7 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Alert from 'react-bootstrap/Alert';
 
 export const CartContext = createContext();
 
