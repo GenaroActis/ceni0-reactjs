@@ -9,7 +9,7 @@ const Footer = () => {
                 <li className="nav-item"><Link className="nav-link px-2 text-white" aria-current="page" to={`/ceni0-reactjs`}>Inicio</Link></li>
                 <li className="nav-item"><Link className="nav-link px-2 text-white" aria-current="page" to={`/Nosotros`}>Nosotros</Link></li>
             </ul>
-            <p className="text-center text-white">© 2022 Company, Inc</p>
+            <p className="text-center text-white">© 2022 Company, Actis Inc</p>
         </footer>
     )
 }
